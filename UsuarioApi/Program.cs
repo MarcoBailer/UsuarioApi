@@ -1,6 +1,30 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using UsuarioApi.Data;
+using UsuarioApi.Models;
+using UsuarioApi.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionStrings = builder.Configuration.GetConnectionString
+        ("UsuarioConnection");
+
 // Add services to the container.
+builder.Services.AddDbContext<UsuarioDbContext>(opts =>
+{
+    opts.UseMySql(connectionStrings,
+        ServerVersion.AutoDetect(connectionStrings));
+});
+
+builder.Services
+    .AddIdentity<Usuario, IdentityRole>()
+    .AddEntityFrameworkStores<UsuarioDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<TokenSercice>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
