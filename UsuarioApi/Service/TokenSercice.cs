@@ -18,10 +18,10 @@ namespace UsuarioApi.Service
                 usuario.DataNascimento.ToString())
             };
 
-            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("kJBEHfbilubjkbIUBilGIIUGLHBVKJB87JK;BOUGkjb8o7gkjvo789865"));
+            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("kJBEHfbilubjkbIUBilGIIUG"));
 
             var sigingCredentials = 
-                new SigningCredentials(chave,SecurityAlgorithms.Aes128CbcHmacSha256);  
+                new SigningCredentials(chave,SecurityAlgorithms.HmacSha256);  
 
             var token = new JwtSecurityToken
                 (
