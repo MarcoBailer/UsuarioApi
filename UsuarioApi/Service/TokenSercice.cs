@@ -8,6 +8,11 @@ namespace UsuarioApi.Service
 {
     public class TokenSercice
     {
+        private IConfiguration _configuration;
+        public TokenSercice(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public string GerarToken(Usuario usuario)
         {
             Claim[] claims = new Claim[]
@@ -18,7 +23,7 @@ namespace UsuarioApi.Service
                 usuario.DataNascimento.ToString())
             };
 
-            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("kJBEHfbilubjkbIUBilGIIUG"));
+            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
 
             var sigingCredentials = 
                 new SigningCredentials(chave,SecurityAlgorithms.HmacSha256);  

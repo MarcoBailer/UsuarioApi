@@ -11,8 +11,8 @@ using UsuarioApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionStrings = builder.Configuration.GetConnectionString
-        ("UsuarioConnection");
+var connectionStrings = builder.Configuration
+    ["connectionString:UsuarioConnection"];
 
 // Add services to the container.
 builder.Services.AddDbContext<UsuarioDbContext>(opts =>
@@ -54,7 +54,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = "http://localhost:5000",
         ValidAudience = "http://localhost:5000",
         IssuerSigningKey = new SymmetricSecurityKey
-        (Encoding.UTF8.GetBytes("kJBEHfbilubjkbIUBilGIIUG"))
+        (Encoding.UTF8.GetBytes(builder.Configuration["SymmetricSecurityKey"]))
     };
 });
 
